@@ -1,0 +1,2197 @@
+﻿---
+swagger: '2.0'
+info:
+  version: v1
+  title: Proffsmagasinet.Api
+host: visma-api-test-new.azurewebsites.net
+schemes:
+- http
+paths:
+  "/converter/order":
+    post:
+      tags:
+      - Converter
+      operationId: Converter_ConvertSiteDirectOrderToVismaOrder
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: order
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/SiteDirectOrderRequest"
+      - name: vismaCustomerId
+        in: query
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+  "/converter/customer":
+    post:
+      tags:
+      - Converter
+      operationId: Converter_ConvertSiteDirectOrderToVismaCustomer
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: order
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/SiteDirectOrderRequest"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+  "/converter/orders":
+    post:
+      tags:
+      - Converter
+      operationId: Converter_ConvertSiteDirectOrderObjectToSiteDirectOrdersArray
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: orders
+        in: body
+        required: true
+        schema:
+          type: object
+          additionalProperties:
+            "$ref": "#/definitions/Order"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+  "/api/customer":
+    post:
+      tags:
+      - Customer
+      operationId: Customer_CreateOrUpdateCustomer
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: customer
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/Customer"
+      responses:
+        '200':
+          description: OK
+          schema:
+            "$ref": "#/definitions/CustomerRelation"
+  "/api/log":
+    post:
+      tags:
+      - Log
+      operationId: Log_AddLogMessage
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: logObject
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/Log"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+  "/api/order/createorders":
+    post:
+      tags:
+      - Order
+      operationId: Order_CreateOrders
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: result
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/SearchResult"
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Relation"
+  "/api/order/createorder":
+    post:
+      tags:
+      - Order
+      operationId: Order_CreateOrder
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: order
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/CustomerOrder"
+      responses:
+        '200':
+          description: OK
+          schema:
+            "$ref": "#/definitions/Relation"
+  "/api/order/getorder":
+    post:
+      tags:
+      - Order
+      operationId: Order_GetOrder
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: OrderId
+        in: body
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            "$ref": "#/definitions/CustomerOrder"
+  "/api/order/getorders":
+    get:
+      tags:
+      - Order
+      operationId: Order_GetOrders
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: fromDate
+        in: query
+        required: true
+        type: string
+        format: date-time
+      - name: toDate
+        in: query
+        required: true
+        type: string
+        format: date-time
+      - name: limit
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/CustomerOrder"
+  "/api/order/setorderassynced":
+    get:
+      tags:
+      - Order
+      operationId: Order_SetOrderAsSynced
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: VismaOrderId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: OrderReceiveStatus
+        in: query
+        required: true
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+  "/api/order/getordersnotsynced":
+    get:
+      tags:
+      - Order
+      operationId: Order_GetOrdersNotSynced
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: flag
+        in: query
+        required: false
+        type: integer
+        format: int32
+        enum:
+        - 1
+        - 2
+        - 4
+        - 8
+      - name: limit
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/CustomerOrder"
+  "/api/transfer/products":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetProducts
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productType
+        in: query
+        required: false
+        type: string
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: take
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Product"
+  "/api/transfer/prices":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetPrices
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: currency
+        in: query
+        required: false
+        type: string
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: take
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Price"
+  "/api/transfer/images":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetImages
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Image"
+  "/api/transfer/files":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetFiles
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/ProductAssociatedFile"
+  "/api/transfer/spectechproperties":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetSpecTechProperties
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/SpecTechProperty"
+  "/api/transfer/relations":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetProductRelations
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: type
+        in: query
+        required: false
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/ProductRelation"
+  "/api/transfer/updateresult":
+    post:
+      tags:
+      - Product
+      operationId: Product_UpdateProduct
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: info
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/UpdateProductInfo"
+      responses:
+        '204':
+          description: No Content
+  "/api/transfer/updatepriceresult":
+    post:
+      tags:
+      - Product
+      operationId: Product_UpdatePrice
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: infos
+        in: body
+        required: true
+        schema:
+          type: array
+          items:
+            "$ref": "#/definitions/UpdatePriceInfo"
+      responses:
+        '204':
+          description: No Content
+  "/api/transfer/inventories":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetInventory
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: sku
+        in: query
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/StockBalanceResponse"
+  "/api/transfer/newprices":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetNewPrices
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Price"
+  "/api/transfer/localize":
+    get:
+      tags:
+      - Product
+      operationId: Product_GetLocalizedContent
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: take
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/LocalizedContent"
+    post:
+      tags:
+      - Product
+      operationId: Product_UpdateLocalizedContent
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: info
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/UpdateProductInfo"
+      responses:
+        '204':
+          description: No Content
+  "/api/transfer/createproduct":
+    post:
+      tags:
+      - Product
+      operationId: Product_CreateProduct
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: product
+        in: body
+        required: true
+        schema:
+          "$ref": "#/definitions/VismaProduct"
+      responses:
+        '204':
+          description: No Content
+  "/api/stockbalance/getstockbalance":
+    get:
+      tags:
+      - StockBalance
+      operationId: StockBalance_GetStockBalance
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: warehouseId
+        in: query
+        required: true
+        type: integer
+        format: int32
+      - name: allStockBalances
+        in: query
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/StockBalanceResponse"
+  "/api/stockbalance/receivedstockbalance":
+    post:
+      tags:
+      - StockBalance
+      operationId: StockBalance_UpdateStockBalances
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: responses
+        in: body
+        required: true
+        schema:
+          type: array
+          items:
+            "$ref": "#/definitions/StockBalanceResponse"
+      responses:
+        '204':
+          description: No Content
+  "/api/stockbalance/getstockbalancenew":
+    get:
+      tags:
+      - StockBalance
+      operationId: StockBalance_GetStockBalanceNew
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      parameters:
+      - name: productId
+        in: query
+        required: false
+        type: integer
+        format: int32
+      - name: take
+        in: query
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/StockBalanceResponse"
+  "/api/stockbalance/receivedstockbalancenew":
+    post:
+      tags:
+      - StockBalance
+      operationId: StockBalance_UpdateStockBalancesNew
+      consumes:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      - application/x-www-form-urlencoded
+      produces: []
+      parameters:
+      - name: stockBalanceImportInfos
+        in: body
+        required: true
+        schema:
+          type: array
+          items:
+            "$ref": "#/definitions/StockBalanceImportInfo"
+      responses:
+        '204':
+          description: No Content
+  "/api/Test":
+    get:
+      tags:
+      - Test
+      operationId: Test_Get
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+  "/api/TestAuth":
+    get:
+      tags:
+      - TestAuth
+      operationId: TestAuth_Get
+      consumes: []
+      produces:
+      - application/json
+      - text/json
+      - application/xml
+      - text/xml
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+definitions:
+  SiteDirectOrderRequest:
+    type: object
+    properties:
+      status:
+        type: string
+      order_no:
+        type: string
+      order:
+        "$ref": "#/definitions/Order"
+  Order:
+    type: object
+    properties:
+      sys_id:
+        type: string
+      sys_subtype:
+        type: string
+      sys_active:
+        type: string
+      status:
+        type: string
+      part_delv:
+        type: string
+      ord_date:
+        type: string
+      ord_comment:
+        type: string
+      ord_comment_to_cust:
+        type: string
+      int_comment:
+        type: string
+      sum_discount:
+        type: string
+      sum_vat:
+        type: string
+      item_sum_excl:
+        type: string
+      item_sum_incl:
+        type: string
+      sum_excl:
+        type: string
+      sum_incl:
+        type: string
+      total:
+        type: string
+      cust_contact:
+        type: string
+      cust_customer_id:
+        type: string
+      cust_external_id:
+        type: string
+      cust_email:
+        type: string
+      cust_subtype:
+        type: string
+      cust_company:
+        type: string
+      cust_firstname:
+        type: string
+      cust_lastname:
+        type: string
+      cust_number:
+        type: string
+      cust_address:
+        type: string
+      cust_address2:
+        type: string
+      cust_housenumber:
+        type: string
+      cust_houseext:
+        type: string
+      cust_postcode:
+        type: string
+      cust_city:
+        type: string
+      cust_gender:
+        type: string
+      cust_state:
+        type: string
+      cust_reference:
+        type: string
+      cust_reference_name:
+        type: string
+      cust_country:
+        type: string
+      cust_country_code:
+        type: string
+      cust_phone:
+        type: string
+      cust_cellphone:
+        type: string
+      cust_ip:
+        type: string
+      order_new_customer:
+        type: string
+      shipto:
+        type: string
+      ship_company:
+        type: string
+      ship_firstname:
+        type: string
+      ship_lastname:
+        type: string
+      ship_address:
+        type: string
+      ship_address2:
+        type: string
+      ship_housenumber:
+        type: string
+      ship_houseext:
+        type: string
+      ship_postcode:
+        type: string
+      ship_city:
+        type: string
+      ship_state:
+        type: string
+      ship_country:
+        type: string
+      ship_country_code:
+        type: string
+      ship_phone:
+        type: string
+      ship_cellphone:
+        type: string
+      ship_email:
+        type: string
+      sms_notice_number:
+        type: string
+      currency:
+        type: string
+      currency_rate:
+        type: string
+      pay_item:
+        type: string
+      pay_type:
+        type: string
+      ship_item:
+        type: string
+      ship_id1:
+        type: string
+      ship_id2:
+        type: string
+      ship_id3:
+        type: string
+      ship_id4:
+        type: string
+      ship_id5:
+        type: string
+      item_sum_weight:
+        type: string
+      item_sum_volume:
+        type: string
+      sum_weight:
+        type: string
+      sum_volume:
+        type: string
+      pricelist:
+        type: string
+      region:
+        type: string
+      test:
+        type: string
+      cust_mark1:
+        type: string
+      cust_mark2:
+        type: string
+      market:
+        type: string
+      payment_account:
+        type: string
+      campaign_code:
+        type: string
+      delivery_shipping_link:
+        type: string
+      error_status:
+        type: string
+      error_code:
+        type: string
+      delivery_status:
+        type: string
+      information2:
+        type: string
+      information3:
+        type: string
+      information4:
+        type: string
+      information5:
+        type: string
+      information6:
+        type: string
+      order_rows:
+        type: object
+        additionalProperties:
+          "$ref": "#/definitions/OrderRow"
+      id:
+        type: string
+  OrderRow:
+    type: object
+    properties:
+      sys_id:
+        type: string
+      sys_subpid:
+        type: string
+      sys_subtype:
+        type: string
+      row_type:
+        type: string
+      product:
+        type: string
+      product_id:
+        type: string
+      type:
+        type: string
+      text:
+        type: string
+      campaign:
+        type: string
+      quantity:
+        type: string
+      qty_delivered:
+        type: string
+      unit:
+        type: string
+      discount:
+        type: string
+      price_excl:
+        type: string
+      price_incl:
+        type: string
+      price_sum_excl:
+        type: string
+      price_sum_incl:
+        type: string
+      payment:
+        type: string
+      price_calc:
+        type: string
+      sum_weight:
+        type: string
+      sum_volume:
+        type: string
+      vat:
+        type: string
+      delivery_type:
+        type: string
+      data:
+        type: string
+  Customer:
+    type: object
+    properties:
+      Email:
+        type: string
+      OrganizationNumber:
+        type: string
+      PersonalID:
+        type: string
+      Name:
+        type: string
+      Reference:
+        type: string
+      AddressLine1:
+        type: string
+      AddressLine2:
+        type: string
+      PostalAddress:
+        type: string
+      PostalCode:
+        type: string
+      CountryCode:
+        type: string
+      Phone:
+        type: string
+      MobilePhone:
+        type: string
+      OuterId:
+        type: string
+      CustomerType:
+        format: int32
+        enum:
+        - 1
+        - 2
+        type: integer
+      AccountSet:
+        format: int32
+        type: integer
+  CustomerRelation:
+    type: object
+    properties:
+      OuterId:
+        type: string
+      CustomerId:
+        type: string
+      Message:
+        type: string
+  Log:
+    type: object
+    properties:
+      VismaOrderId:
+        type: string
+      OrderId:
+        type: string
+      SendStatus:
+        type: string
+      ReceiveStatus:
+        type: string
+      Success:
+        type: string
+      Response:
+        type: string
+  SearchResult:
+    type: object
+    properties:
+      TotalCount:
+        format: int32
+        type: integer
+      CustomerOrders:
+        type: array
+        items:
+          "$ref": "#/definitions/CustomerOrder"
+  CustomerOrder:
+    type: object
+    properties:
+      IsValid:
+        type: boolean
+      VismaCustomer:
+        "$ref": "#/definitions/Actor"
+      CustomerName:
+        type: string
+      CustomerId:
+        type: string
+      WarehouseId:
+        format: int32
+        type: integer
+      Addresses:
+        type: array
+        items:
+          "$ref": "#/definitions/Address"
+      InPayments:
+        type: array
+        items:
+          "$ref": "#/definitions/PaymentIn"
+      Items:
+        type: array
+        items:
+          "$ref": "#/definitions/LineItem"
+      Shipments:
+        type: array
+        items:
+          "$ref": "#/definitions/Shipment"
+      LineItemsSumInclTax:
+        format: double
+        type: number
+      LineItemsSumExclTax:
+        format: double
+        type: number
+      OrderSumInclTax:
+        format: double
+        type: number
+      OrderSumExclTax:
+        format: double
+        type: number
+      Tax:
+        format: double
+        type: number
+      Currency:
+        type: string
+      OrderComment:
+        type: string
+      ShippingCost:
+        format: double
+        type: number
+      PaymentCost:
+        format: double
+        type: number
+      SalesCode:
+        format: int32
+        type: integer
+      VismaOrderId:
+        format: int32
+        type: integer
+      VismaOrderstatus1:
+        format: int32
+        type: integer
+      VismaTestResult:
+        format: int32
+        type: integer
+      VismaInvoiceDate:
+        format: date-time
+        type: string
+      VismaCancelledDate:
+        format: date-time
+        type: string
+      VismaOrderReceiveDateTime:
+        format: date-time
+        type: string
+      VismaOrderSendStatus:
+        format: int64
+        type: integer
+      VismaOrderReceiveStatus:
+        format: int64
+        type: integer
+      Information2:
+        type: string
+      Information3:
+        type: string
+      Information4:
+        type: string
+      Information5:
+        type: string
+      Information6:
+        type: string
+      DmeInformation1:
+        type: string
+      DmeInformation2:
+        type: string
+      DynamicProperties:
+        type: array
+        items:
+          "$ref": "#/definitions/DynamicObjectProperty"
+      CreatedDate:
+        format: date-time
+        type: string
+      ChangedDate:
+        format: date-time
+        type: string
+      Id:
+        type: string
+  Actor:
+    type: object
+    properties:
+      ActNo:
+        format: int32
+        type: integer
+      Nm:
+        type: string
+      Ad1:
+        type: string
+      Ad2:
+        type: string
+      Ad3:
+        type: string
+      Ad4:
+        type: string
+      PNo:
+        type: string
+      PArea:
+        type: string
+      Ctry:
+        format: int32
+        type: integer
+      Lang:
+        format: int32
+        type: integer
+      Shrt:
+        type: string
+      MailAd:
+        type: string
+      Phone:
+        type: string
+      PrivPh:
+        type: string
+      MobPh:
+        type: string
+      Pers:
+        type: string
+      Fax:
+        type: string
+      CustNo:
+        format: int32
+        type: integer
+      NwCustNo:
+        format: int32
+        type: integer
+      SupNo:
+        format: int32
+        type: integer
+      NwSupNo:
+        format: int32
+        type: integer
+      EmpNo:
+        format: int32
+        type: integer
+      NwEmpNo:
+        format: int32
+        type: integer
+      Title:
+        type: string
+      LiaAct:
+        format: int32
+        type: integer
+      Usr:
+        type: string
+      NwUsr:
+        type: string
+      Seller:
+        format: int32
+        type: integer
+      Buyer:
+        format: int32
+        type: integer
+      Rsp:
+        format: int32
+        type: integer
+      Att:
+        format: int32
+        type: integer
+      R1:
+        format: int32
+        type: integer
+      R2:
+        format: int32
+        type: integer
+      R3:
+        format: int32
+        type: integer
+      R4:
+        format: int32
+        type: integer
+      R5:
+        format: int32
+        type: integer
+      R6:
+        format: int32
+        type: integer
+      CrLmt:
+        format: double
+        type: number
+      CrSusp:
+        format: int32
+        type: integer
+      CrEval:
+        type: string
+      CustAcNo:
+        format: int32
+        type: integer
+      SupAcNo:
+        format: int32
+        type: integer
+      AgAcNo:
+        format: int32
+        type: integer
+      CustMaMt:
+        format: int32
+        type: integer
+      SupMaMt:
+        format: int32
+        type: integer
+      CAcSet:
+        format: int32
+        type: integer
+      SAcSet:
+        format: int32
+        type: integer
+      CVatNo:
+        format: int32
+        type: integer
+      SVatNo:
+        format: int32
+        type: integer
+      ExVat:
+        format: int32
+        type: integer
+      ExSpc:
+        format: int32
+        type: integer
+      DelToAct:
+        format: int32
+        type: integer
+      DelFrAct:
+        format: int32
+        type: integer
+      CStc:
+        format: int32
+        type: integer
+      SStc:
+        format: int32
+        type: integer
+      DelPri:
+        format: int32
+        type: integer
+      CDelMt:
+        format: int32
+        type: integer
+      SDelMt:
+        format: int32
+        type: integer
+      CDelTrm:
+        format: int32
+        type: integer
+      SDelTrm:
+        format: int32
+        type: integer
+      Cur:
+        format: int32
+        type: integer
+      CustPrGr:
+        format: int32
+        type: integer
+      EmpPrGr:
+        format: int32
+        type: integer
+      CustTotD:
+        format: double
+        type: number
+      SupTotD:
+        format: double
+        type: number
+      InvoCust:
+        format: int32
+        type: integer
+      FactNo:
+        type: string
+      CPmtTrm:
+        format: int32
+        type: integer
+      SPmtTrm:
+        format: int32
+        type: integer
+      CPmtMt:
+        format: int32
+        type: integer
+      SPmtMt:
+        format: int32
+        type: integer
+      BGiro:
+        type: string
+      PGiro:
+        type: string
+      DebFrDt:
+        format: int32
+        type: integer
+      DebToDt:
+        format: int32
+        type: integer
+      MaxRems:
+        format: int32
+        type: integer
+      LstRemDt:
+        format: int32
+        type: integer
+      LstRemNo:
+        format: int32
+        type: integer
+      IntRt:
+        format: double
+        type: number
+      RmtPri:
+        format: int32
+        type: integer
+      RmtSup:
+        format: int32
+        type: integer
+      SwftCd:
+        type: string
+      SwftAd1:
+        type: string
+      SwftAd2:
+        type: string
+      SwftAd3:
+        type: string
+      SwftAd4:
+        type: string
+      OurCNo:
+        type: string
+      InfCat:
+        format: int32
+        type: integer
+      Trade:
+        format: int32
+        type: integer
+      Distr:
+        format: int32
+        type: integer
+      BsNo:
+        type: string
+      NoOfEmp:
+        format: int32
+        type: integer
+      Turn:
+        format: double
+        type: number
+      Gr:
+        format: int32
+        type: integer
+      Gr2:
+        format: int32
+        type: integer
+      Gr3:
+        format: int32
+        type: integer
+      Gr4:
+        format: int32
+        type: integer
+      Gr5:
+        format: int32
+        type: integer
+      Gr6:
+        format: int32
+        type: integer
+      Inf:
+        type: string
+      Inf2:
+        type: string
+      Inf3:
+        type: string
+      Inf4:
+        type: string
+      Inf5:
+        type: string
+      Inf6:
+        type: string
+      FrDt:
+        format: int32
+        type: integer
+      ToDt:
+        format: int32
+        type: integer
+      SrcNo:
+        format: int32
+        type: integer
+      NoteNm:
+        type: string
+      ChDt:
+        format: int32
+        type: integer
+      ChTm:
+        format: int32
+        type: integer
+      ChUsr:
+        type: string
+      LckSt:
+        format: int32
+        type: integer
+      ChPrc:
+        format: int32
+        type: integer
+      ChSm:
+        format: int32
+        type: integer
+      SAgAcNo:
+        format: int32
+        type: integer
+      CreDt:
+        format: int32
+        type: integer
+      CreUsr:
+        type: string
+      Branch:
+        type: string
+      DirDeb:
+        format: int32
+        type: integer
+      MaxDebAm:
+        format: double
+        type: number
+      CustPrG2:
+        format: int32
+        type: integer
+      PrSup:
+        format: int32
+        type: integer
+      SPrAdd:
+        format: double
+        type: number
+      CustPref:
+        format: int32
+        type: integer
+      SupPref:
+        format: int32
+        type: integer
+      Gr7:
+        format: int32
+        type: integer
+      Gr8:
+        format: int32
+        type: integer
+      Gr9:
+        format: int32
+        type: integer
+      Gr10:
+        format: int32
+        type: integer
+      Gr11:
+        format: int32
+        type: integer
+      Gr12:
+        format: int32
+        type: integer
+      Inf7:
+        type: string
+      Inf8:
+        type: string
+      YrRef:
+        type: string
+      Fax2:
+        type: string
+      EUTaxNo:
+        type: string
+      AdmTm:
+        format: int32
+        type: integer
+      DelTm:
+        format: int32
+        type: integer
+      TanspTm:
+        format: int32
+        type: integer
+      DocSMt:
+        format: int32
+        type: integer
+      DelIntv:
+        format: int32
+        type: integer
+      LstDelDt:
+        format: int32
+        type: integer
+      MainAct:
+        format: int32
+        type: integer
+      MaxDueP:
+        format: int32
+        type: integer
+      MaxDueDy:
+        format: int32
+        type: integer
+      AcDocSMt:
+        format: int32
+        type: integer
+      SOLink:
+        format: int32
+        type: integer
+      CryptK:
+        type: string
+      ActPro:
+        format: int32
+        type: integer
+      NwCNo:
+        format: int32
+        type: integer
+      NwSNo:
+        format: int32
+        type: integer
+      PictFNm:
+        type: string
+      TspDy:
+        format: int32
+        type: integer
+      LstSuit:
+        format: int32
+        type: integer
+      ExtID:
+        type: string
+      ChExt:
+        format: double
+        type: number
+      IntAd1:
+        type: string
+      IntAd2:
+        type: string
+      OldCNo:
+        format: int32
+        type: integer
+      OldSNo:
+        format: int32
+        type: integer
+      EANLocCd:
+        type: string
+      OlAcNo:
+        format: int32
+        type: integer
+      ClReAcNo:
+        format: int32
+        type: integer
+      ClBaAcNo:
+        format: int32
+        type: integer
+      CustPrG3:
+        format: int32
+        type: integer
+      TspAgrNo:
+        format: int32
+        type: integer
+      TonRt:
+        format: int32
+        type: integer
+      R7:
+        type: string
+      R8:
+        type: string
+      R9:
+        type: string
+      R10:
+        type: string
+      R11:
+        type: string
+      R12:
+        type: string
+      GiroChSm:
+        format: int32
+        type: integer
+      BankCon:
+        format: int32
+        type: integer
+      ViPNo:
+        type: string
+      ViPArea:
+        type: string
+      RemPrDt:
+        format: int32
+        type: integer
+      IntGr:
+        format: int32
+        type: integer
+      CNtDy:
+        format: int32
+        type: integer
+      ePsw:
+        type: string
+      eProc:
+        format: int32
+        type: integer
+      SmsProv:
+        format: int32
+        type: integer
+      ProdTm:
+        format: int32
+        type: integer
+      TmZn:
+        format: int32
+        type: integer
+      FCNo:
+        format: int32
+        type: integer
+      Cl3AcNo:
+        format: int32
+        type: integer
+      NrmTDisc:
+        format: double
+        type: number
+      TSGrNo:
+        format: int32
+        type: integer
+      FlGr:
+        format: int32
+        type: integer
+      AttAmLmt:
+        format: double
+        type: number
+      AgrChBal:
+        format: double
+        type: number
+      ShpActNo:
+        format: int32
+        type: integer
+      BPartNo:
+        format: int32
+        type: integer
+      EftSep:
+        type: string
+      ExtExpGr:
+        format: int32
+        type: integer
+      EFT1:
+        format: int32
+        type: integer
+      EFT2:
+        format: int32
+        type: integer
+      EFT3:
+        format: int32
+        type: integer
+      EFT4:
+        format: int32
+        type: integer
+      FormId:
+        format: int32
+        type: integer
+      Fee:
+        format: double
+        type: number
+      Cur2:
+        format: int32
+        type: integer
+      ChTmms:
+        format: int32
+        type: integer
+      CustPre2:
+        format: int32
+        type: integer
+      EftFrmTp:
+        format: int32
+        type: integer
+      CardAddP:
+        format: double
+        type: number
+      PerID:
+        type: string
+      IntFee:
+        format: double
+        type: number
+      AuInOpNo:
+        format: int32
+        type: integer
+      AuMailAd:
+        type: string
+      CreTm:
+        format: int32
+        type: integer
+      EmailTmplGr:
+        format: int32
+        type: integer
+  Address:
+    type: object
+    properties:
+      AddressType:
+        format: int32
+        enum:
+        - 1
+        - 2
+        - 3
+        type: integer
+      CountryCode:
+        type: string
+      City:
+        type: string
+      PostalCode:
+        type: string
+      Line1:
+        type: string
+      Line2:
+        type: string
+      FirstName:
+        type: string
+      LastName:
+        type: string
+      Organization:
+        type: string
+      MobilePhone:
+        type: string
+  PaymentIn:
+    type: object
+    properties:
+      PaymentMethod:
+        "$ref": "#/definitions/PaymentMethod"
+      OuterId:
+        type: string
+  LineItem:
+    type: object
+    properties:
+      Price:
+        format: double
+        type: number
+      Quantity:
+        format: int32
+        type: integer
+      Sku:
+        type: string
+      Name:
+        type: string
+      WarehouseId:
+        format: int32
+        type: integer
+      PriceExclTax:
+        format: double
+        type: number
+      PriceInclTax:
+        format: double
+        type: number
+      PriceSumExclTax:
+        format: double
+        type: number
+      PriceSumInclTax:
+        format: double
+        type: number
+      Currency:
+        type: string
+      DmeInformation1:
+        type: string
+      DmeInformation2:
+        type: string
+      Type:
+        format: int32
+        enum:
+        - 0
+        - 1
+        - 2
+        type: integer
+      CreatedDate:
+        format: date-time
+        type: string
+      ChangedDate:
+        format: date-time
+        type: string
+      Id:
+        type: string
+  Shipment:
+    type: object
+    properties:
+      ShippingMethod:
+        "$ref": "#/definitions/ShippingMethod"
+  DynamicObjectProperty:
+    type: object
+    properties:
+      Name:
+        type: string
+      Values:
+        type: array
+        items:
+          "$ref": "#/definitions/DynamicPropertyObjectValue"
+  PaymentMethod:
+    type: object
+    properties:
+      Code:
+        type: string
+  ShippingMethod:
+    type: object
+    properties:
+      Code:
+        type: string
+  DynamicPropertyObjectValue:
+    type: object
+    properties:
+      Value:
+        type: object
+  Relation:
+    type: object
+    properties:
+      OrderId:
+        type: string
+      VismaOrderId:
+        type: string
+      Errors:
+        type: array
+        items:
+          type: string
+  Product:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Code:
+        type: string
+      CategoryCode:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      EAN:
+        type: string
+      SupplierProductCode:
+        type: string
+      ProductType:
+        type: string
+      Keywords:
+        type: string
+      MainProductId:
+        format: int32
+        type: integer
+      BrandCode:
+        format: int32
+        type: integer
+      MPN:
+        type: string
+      Weight:
+        format: double
+        type: number
+      Height:
+        format: double
+        type: number
+      Length:
+        format: double
+        type: number
+      Width:
+        format: double
+        type: number
+      IsActive:
+        type: boolean
+      IsBuyable:
+        type: boolean
+      AvailableStores:
+        type: string
+      Descriptions:
+        type: array
+        items:
+          "$ref": "#/definitions/Description"
+      Properties:
+        type: array
+        items:
+          "$ref": "#/definitions/Property"
+      Attachments:
+        type: array
+        items:
+          "$ref": "#/definitions/Attachment"
+  Description:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Locale:
+        type: string
+      FullDescription:
+        type: string
+      QuickDescription:
+        type: string
+      ListDescription:
+        type: string
+  Property:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Locale:
+        type: string
+      Feature:
+        type: string
+      Brand:
+        type: string
+      ProTerm:
+        type: string
+      Variant:
+        type: string
+      IsRecomended:
+        type: boolean
+      IsNew:
+        type: boolean
+      InStockMessage:
+        type: string
+      OutOfStockMessage:
+        type: string
+  Attachment:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Locale:
+        type: string
+      Youtube1:
+        type: string
+      Youtube2:
+        type: string
+      Youtube3:
+        type: string
+      Youtube4:
+        type: string
+  Price:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      SalePrice:
+        format: double
+        type: number
+      ListPrice:
+        format: double
+        type: number
+      RecommendPrice:
+        format: double
+        type: number
+      Currency:
+        type: string
+      PriceListName:
+        type: string
+  Image:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      ImageLink:
+        type: string
+      Order:
+        format: int32
+        type: integer
+  ProductAssociatedFile:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Name:
+        type: string
+      FileLink:
+        type: string
+      Order:
+        format: int32
+        type: integer
+  SpecTechProperty:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      ValueType:
+        type: string
+      Value:
+        type: string
+      PropertyCode:
+        type: string
+      PropertyName:
+        type: string
+  ProductRelation:
+    type: object
+    properties:
+      MainProductId:
+        format: int32
+        type: integer
+      RelationProductId:
+        format: int32
+        type: integer
+      Type:
+        type: string
+      Quantity:
+        format: int32
+        type: integer
+  UpdateProductInfo:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      IsSuccess:
+        type: boolean
+      Message:
+        type: string
+  UpdatePriceInfo:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Currency:
+        type: string
+      IsSuccess:
+        type: boolean
+      Message:
+        type: string
+      PriceListName:
+        type: string
+  StockBalanceResponse:
+    type: object
+    properties:
+      Sku:
+        type: string
+      WarehouseId:
+        format: int32
+        type: integer
+      StockBalance:
+        format: int32
+        type: integer
+  LocalizedContent:
+    type: object
+    properties:
+      ProductId:
+        format: int32
+        type: integer
+      Property:
+        "$ref": "#/definitions/Property"
+      Description:
+        "$ref": "#/definitions/Description"
+  VismaProduct:
+    type: object
+    properties:
+      Quantity:
+        format: int32
+        type: integer
+      Sku:
+        type: string
+      Name:
+        type: string
+      WarehouseId:
+        format: int32
+        type: integer
+      CountryCode:
+        type: string
+      Type:
+        format: int32
+        enum:
+        - 0
+        - 1
+        - 2
+        type: integer
+  StockBalanceImportInfo:
+    type: object
+    properties:
+      ProductId:
+        type: string
+      IsSuccess:
+        type: boolean
+      Message:
+        type: string
+      InStockQuantity:
+        format: int32
+        type: integer
+securityDefinitions:
+  Token:
+    type: apiKey
+    description: Filling bearer token here
+    name: Authorization
+    in: header
